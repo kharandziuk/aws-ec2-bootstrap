@@ -7,10 +7,10 @@ terraform {
 #   rsa_bits  = 4096
 # }
 
-# resource "aws_key_pair" "deploy" {
-#   key_name   = "key related to main object"
-#   public_key = file("${path.module}/files/key_rsa.pub")
-# }
+resource "aws_key_pair" "deploy" {
+  key_name   = "key related to main object"
+  public_key = file(var.path_to_pub_key)
+}
 
 resource "aws_security_group" "main" {
   egress = [
@@ -71,7 +71,7 @@ resource "aws_instance" "example" {
   # ami           = data.aws_ami.ubuntu.id
   instance_type = var.instance_type
   # instance_type = "t2.micro"
-  # key_name = aws_key_pair.deploy.key_name
+  key_name = aws_key_pair.deploy.key_name
 
   tags = {
     Purpose = "for prototype of docker-compose and ami"
