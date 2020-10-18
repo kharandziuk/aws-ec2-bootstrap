@@ -8,7 +8,7 @@ variable "instance_type" {
   description = "Instance type"
 }
 
-variable "path_to_pub_key" {
-  type        = string
-  description = "Path to pub key"
-}
+# variable "path_to_pub_key" {
+#   type        = string
+#   description = "Path to pub key"
+# }
