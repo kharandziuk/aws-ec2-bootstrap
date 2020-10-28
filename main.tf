@@ -1,21 +1,3 @@
-variable "aws_access_key" {
-  description = "Access key to your AWS account "
-}
-
-variable "aws_secret_key" {
-  description = "Secret key to your AWS account "
-}
-
-variable "aws_region" {
-  default     = "eu-central-1"
-  description = "AWS region"
-}
-
-provider "aws" {
-  region     = var.aws_region
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
-}
 
 resource "tls_private_key" "example" {
   algorithm = "RSA"
@@ -23,8 +5,8 @@ resource "tls_private_key" "example" {
 }
 
 resource "aws_key_pair" "deploy" {
-  key_name   = "key related to main object"
-  public_key = file("${path.module}/files/key_rsa.pub")
+  key_name   = "key for ${var.description}"
+  public_key = var.public_key
 }
 
 resource "aws_security_group" "main" {
@@ -83,24 +65,14 @@ data "aws_ami" "ubuntu" {
 
 }
 
-resource "aws_instance" "example" {
+resource "aws_instance" "default" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   key_name      = aws_key_pair.deploy.key_name
 
   tags = {
-    Purpose = "for prototype of docker-compose and ami"
+    description = var.description
   }
 
   vpc_security_group_ids = [aws_security_group.main.id]
 }
-
-locals {
-  ansible_command_engine = "ansible-playbook -i ${aws_instance.example.public_ip}, --user root --private-key files/key_rsa playbook.yml"
-}
-
-output "command" {
-  value = local.ansible_command_engine
-}
-
-
