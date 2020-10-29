@@ -12,7 +12,7 @@ resource "aws_key_pair" "deploy" {
 resource "aws_security_group" "main" {
   egress = [
     {
-      cidr_blocks      = [ "0.0.0.0/0", ]
+      cidr_blocks      = ["0.0.0.0/0", ]
       description      = ""
       from_port        = 0
       ipv6_cidr_blocks = []
@@ -23,9 +23,9 @@ resource "aws_security_group" "main" {
       to_port          = 0
     }
   ]
-  ingress                = [
+  ingress = [
     {
-      cidr_blocks      = [ "0.0.0.0/0", ]
+      cidr_blocks      = ["0.0.0.0/0", ]
       description      = ""
       from_port        = 22
       ipv6_cidr_blocks = []
@@ -36,7 +36,7 @@ resource "aws_security_group" "main" {
       to_port          = 22
     },
     {
-      cidr_blocks      = [ "0.0.0.0/0", ]
+      cidr_blocks      = ["0.0.0.0/0", ]
       description      = ""
       from_port        = 80
       ipv6_cidr_blocks = []
@@ -51,7 +51,7 @@ resource "aws_security_group" "main" {
 
 data "aws_ami" "ubuntu" {
   most_recent = true
-  owners = ["099720109477"]
+  owners      = ["099720109477"]
 
   filter {
     name   = "name"
