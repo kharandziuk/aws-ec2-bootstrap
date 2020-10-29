@@ -12,8 +12,8 @@ variable "aws_region" {
 }
 
 locals {
-  tmp_path  = "${path.module}/.terraform/tmp"
-  public_key_path = "${local.tmp_path}/key_rsa"
+  tmp_path               = "${path.module}/.terraform/tmp"
+  public_key_path        = "${local.tmp_path}/key_rsa"
   ansible_command_engine = "ansible-playbook -i ${module.instance.public_ip}, --user ubuntu --private-key ${local.public_key_path} playbook.yml"
 }
 
@@ -24,8 +24,8 @@ resource "tls_private_key" "default" {
 
 
 resource "local_file" "private_key" {
-  content = tls_private_key.default.private_key_pem
-  filename = local.public_key_path
+  content         = tls_private_key.default.private_key_pem
+  filename        = local.public_key_path
   file_permission = "0600"
 }
 
@@ -40,7 +40,7 @@ provider "aws" {
 module "instance" {
   description = "test instance"
   source      = "../"
-  public_key = tls_private_key.default.public_key_openssh
+  public_key  = tls_private_key.default.public_key_openssh
 }
 
 
