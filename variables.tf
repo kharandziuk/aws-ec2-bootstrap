@@ -1,6 +1,6 @@
 variable "ami" {
   description = "an id of the ami to use"
-  default = ""
+  default     = ""
 }
 
 variable "public_key" {
