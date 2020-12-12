@@ -66,7 +66,7 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "default" {
-  ami           = data.aws_ami.ubuntu.id
+  ami           = length(var.ami) > 0 ? var.ami : data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   key_name      = aws_key_pair.deploy.key_name
 
