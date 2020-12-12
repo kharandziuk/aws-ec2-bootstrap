@@ -10,9 +10,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Setup Terraform
-        uses: autero1/action-terraform@v0.1.0
+        uses: hashicorp/setup-terraform@v1.2.1
         with:
-          terraform_version: 0.12.24
+          terraform_version: 0.14.2
 
       - name: check terraform formating
         run:  terraform fmt -recursive -check
